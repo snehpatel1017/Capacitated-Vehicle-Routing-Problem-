@@ -1,0 +1,6 @@
+CommandLine Obj generated : 9.125e-06
+InstanceCVRPLIB Obj generated : 0.000386291
+GeneratePopulation Completed : 0.191682
+crossoverOx time : 1.02449
+localSearch time : 20.4494
+addIndividual time : 1.163

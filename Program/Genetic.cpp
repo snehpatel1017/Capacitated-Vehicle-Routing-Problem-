@@ -1,4 +1,5 @@
 #include "Genetic.h"
+#include <chrono>
 
 void Genetic::run()
 {

@@ -53,47 +53,47 @@ struct Client
 class Params
 {
 public:
-
 	/* PARAMETERS OF THE GENETIC ALGORITHM */
-	bool verbose;                       // Controls verbose level through the iterations
-	AlgorithmParameters ap;	            // Main parameters of the HGS algorithm
+	bool verbose;			// Controls verbose level through the iterations
+	AlgorithmParameters ap; // Main parameters of the HGS algorithm
 
 	/* ADAPTIVE PENALTY COEFFICIENTS */
-	double penaltyCapacity;				// Penalty for one unit of capacity excess (adapted through the search)
-	double penaltyDuration;				// Penalty for one unit of duration excess (adapted through the search)
+	double penaltyCapacity; // Penalty for one unit of capacity excess (adapted through the search)
+	double penaltyDuration; // Penalty for one unit of duration excess (adapted through the search)
 
 	/* START TIME OF THE ALGORITHM */
-	clock_t startTime;                  // Start time of the optimization (set when Params is constructed)
+	clock_t startTime; // Start time of the optimization (set when Params is constructed)
 
-	/* RANDOM NUMBER GENERATOR */       
-	std::minstd_rand ran;               // Using the fastest and simplest LCG. The quality of random numbers is not critical for the LS, but speed is
+	/* RANDOM NUMBER GENERATOR */
+	std::minstd_rand ran; // Using the fastest and simplest LCG. The quality of random numbers is not critical for the LS, but speed is
 
 	/* DATA OF THE PROBLEM INSTANCE */
-	bool isDurationConstraint ;								// Indicates if the problem includes duration constraints
-	int nbClients ;											// Number of clients (excluding the depot)
-	int nbVehicles ;										// Number of vehicles
-	double durationLimit;									// Route duration limit
-	double vehicleCapacity;									// Capacity limit
-	double totalDemand ;									// Total demand required by the clients
-	double maxDemand;										// Maximum demand of a client
-	double maxDist;											// Maximum distance between two clients
-	std::vector< Client > cli ;								// Vector containing information on each client
-	const std::vector< std::vector< double > >& timeCost;	// Distance matrix
-	std::vector< std::vector< int > > correlatedVertices;	// Neighborhood restrictions: For each client, list of nearby customers
-	bool areCoordinatesProvided;                            // Check if valid coordinates are provided
+	bool isDurationConstraint;						  // Indicates if the problem includes duration constraints
+	int nbClients;									  // Number of clients (excluding the depot)
+	int nbVehicles;									  // Number of vehicles
+	double durationLimit;							  // Route duration limit
+	double vehicleCapacity;							  // Capacity limit
+	double totalDemand;								  // Total demand required by the clients
+	double maxDemand;								  // Maximum demand of a client
+	double maxDist;									  // Maximum distance between two clients
+	std::vector<Client> cli;						  // Vector containing information on each client
+	const std::vector<std::vector<double>> &timeCost; // Distance matrix
+	std::vector<std::vector<int>> correlatedVertices; // Neighborhood restrictions: For each client, list of nearby customers
+	bool areCoordinatesProvided;					  // Check if valid coordinates are provided
 
 	// Initialization from a given data set
-	Params(const std::vector<double>& x_coords,
-		const std::vector<double>& y_coords,
-		const std::vector<std::vector<double>>& dist_mtx,
-		const std::vector<double>& service_time,
-		const std::vector<double>& demands,
-		double vehicleCapacity,
-		double durationLimit,
-		int nbVeh,
-		bool isDurationConstraint,
-		bool verbose,
-		const AlgorithmParameters& ap);
+	Params(const std::vector<double> &x_coords,
+		   const std::vector<double> &y_coords,
+		   const std::vector<std::vector<double>> &dist_mtx,
+		   const std::vector<double> &service_time,
+		   const std::vector<double> &demands,
+		   double vehicleCapacity,
+		   double durationLimit,
+		   int nbVeh,
+		   bool isDurationConstraint,
+		   bool verbose,
+		   const AlgorithmParameters &ap);
+
+	double getDist(int i, int j) const;
 };
 #endif
-

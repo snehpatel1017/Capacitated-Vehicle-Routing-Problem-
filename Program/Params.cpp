@@ -74,10 +74,18 @@ Params::Params(
 
 	// Calculation of the maximum distance
 	maxDist = 0.;
+	// for (int i = 0; i <= nbClients; i++)
+	// 	for (int j = 0; j <= nbClients; j++)
+	// 		if (timeCost[i][j] > maxDist)
+	// 			maxDist = timeCost[i][j];
+
 	for (int i = 0; i <= nbClients; i++)
-		for (int j = 0; j <= nbClients; j++)
-			if (timeCost[i][j] > maxDist)
-				maxDist = timeCost[i][j];
+	{
+		for (int j = 0; j < nbClients; j++)
+		{
+			maxDist = std::max(maxDist, getDist(i, j));
+		}
+	}
 
 	// Calculation of the correlated vertices for each customer (for the granular restriction)
 	correlatedVertices = std::vector<std::vector<int>>(nbClients + 1);
@@ -88,7 +96,7 @@ Params::Params(
 		orderProximity.clear();
 		for (int j = 1; j <= nbClients; j++)
 			if (i != j)
-				orderProximity.emplace_back(timeCost[i][j], j);
+				orderProximity.emplace_back(getDist(i, j), j);
 		std::sort(orderProximity.begin(), orderProximity.end());
 
 		for (int j = 0; j < std::min<int>(ap.nbGranular, nbClients - 1); j++)
@@ -120,4 +128,13 @@ Params::Params(
 
 	if (verbose)
 		std::cout << "----- INSTANCE SUCCESSFULLY LOADED WITH " << nbClients << " CLIENTS AND " << nbVehicles << " VEHICLES" << std::endl;
+}
+
+double Params::getDist(int i, int j) const
+{
+	const Client &one = cli[i];
+	const Client &two = cli[j];
+	const double dx = one.coordX - two.coordX;
+	const double dy = one.coordY - two.coordY;
+	return std::sqrt(dx * dx + dy * dy);
 }

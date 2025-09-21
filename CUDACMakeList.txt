@@ -8,10 +8,8 @@ find_package(CUDAToolkit REQUIRED)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CUDA_STANDARD 17)
 
-# Target the Tesla V100 (Volta Architecture, Compute Capability 7.0)
-set(CMAKE_CUDA_ARCHITECTURES 70)
-
-# ... rest of the file ...
+# Target the T4 GPU on Google Colab (Turing Architecture, Compute Capability 7.5)
+set(CMAKE_CUDA_ARCHITECTURES 75)
 
 # List of your source files, now with .cu extensions
 set(
@@ -25,7 +23,6 @@ set(
     Program/InstanceCVRPLIB.cu
     Program/AlgorithmParameters.cu
     Program/C_Interface.cu
-    Program/LocalSearch_CUDA.cu
 )
 
 if (MSVC)
@@ -86,7 +83,7 @@ if(CMAKE_CURRENT_SOURCE_DIR STREQUAL CMAKE_SOURCE_DIR)
     add_subdirectory(Test/Test-c/)
     add_test(NAME       lib_test_c
              COMMAND    lib_test_c)
-
+    
     # --- Install Section (No changes needed here) ---
     install(TARGETS lib
             DESTINATION lib)
@@ -95,4 +92,3 @@ if(CMAKE_CURRENT_SOURCE_DIR STREQUAL CMAKE_SOURCE_DIR)
     install(FILES Program/AlgorithmParameters.h Program/C_Interface.h
             DESTINATION include)
 endif()
-

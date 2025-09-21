@@ -27,33 +27,32 @@ SOFTWARE.*/
 
 struct EvalIndiv
 {
-	double penalizedCost = 0.;		// Penalized cost of the solution
-	int nbRoutes = 0;				// Number of routes
-	double distance = 0.;			// Total distance
-	double capacityExcess = 0.;		// Sum of excess load in all routes
-	double durationExcess = 0.;		// Sum of excess duration in all routes
-	bool isFeasible = false;		// Feasibility status of the individual
+  double penalizedCost = 0.;  // Penalized cost of the solution
+  int nbRoutes = 0;           // Number of routes
+  double distance = 0.;       // Total distance
+  double capacityExcess = 0.; // Sum of excess load in all routes
+  double durationExcess = 0.; // Sum of excess duration in all routes
+  bool isFeasible = false;    // Feasibility status of the individual
 };
 
 class Individual
 {
 public:
-
-  EvalIndiv eval;															// Solution cost parameters
-  std::vector < int > chromT ;												// Giant tour representing the individual
-  std::vector < std::vector <int> > chromR ;								// For each vehicle, the associated sequence of deliveries (complete solution)
-  std::vector < int > successors ;											// For each node, the successor in the solution (can be the depot 0)
-  std::vector < int > predecessors ;										// For each node, the predecessor in the solution (can be the depot 0)
-  std::multiset < std::pair < double, Individual* > > indivsPerProximity ;	// The other individuals in the population, ordered by increasing proximity (the set container follows a natural ordering based on the first value of the pair)
-  double biasedFitness;														// Biased fitness of the solution
+  EvalIndiv eval;                                                    // Solution cost parameters
+  std::vector<int> chromT;                                           // Giant tour representing the individual
+  std::vector<std::vector<int>> chromR;                              // For each vehicle, the associated sequence of deliveries (complete solution)
+  std::vector<int> successors;                                       // For each node, the successor in the solution (can be the depot 0)
+  std::vector<int> predecessors;                                     // For each node, the predecessor in the solution (can be the depot 0)
+  std::multiset<std::pair<double, Individual *>> indivsPerProximity; // The other individuals in the population, ordered by increasing proximity (the set container follows a natural ordering based on the first value of the pair)
+  double biasedFitness;                                              // Biased fitness of the solution
 
   // Measuring cost and feasibility of an Individual from the information of chromR (needs chromR filled and access to Params)
-  void evaluateCompleteCost(const Params & params);
+  void evaluateCompleteCost(const Params &params);
 
   // Constructor of a random individual containing only a giant tour with a shuffled visit order
-  Individual(Params & params);
+  Individual(Params &params);
 
   // Constructor of an individual from a file in CVRPLib solution format as produced by the algorithm (useful if a user wishes to input an initial solution)
-  Individual(Params & params, std::string fileName);
+  Individual(Params &params, std::string fileName);
 };
 #endif

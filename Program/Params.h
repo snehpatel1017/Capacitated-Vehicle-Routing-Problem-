@@ -101,6 +101,6 @@ public:
 		   bool verbose,
 		   const AlgorithmParameters &ap);
 
-	~Parms();
+	~Params();
 };
 #endif

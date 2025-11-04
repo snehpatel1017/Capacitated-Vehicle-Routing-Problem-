@@ -507,7 +507,7 @@ __global__ void initializing_variable_CUDA(int n, double *service_time, double *
 __global__ void Initialize_LocalSearch_CUDA(int nbClients, int nbVehicles, Node_CUDA *d_clients, Route_CUDA *d_routes, Node_CUDA *d_depots, Node_CUDA *d_depotsEnd, int *d_route_size, int *d_chrom_T)
 {
     nbVehicles_CUDA = nbVehicles;
-    chrom_T = d_chromT;
+    chrom_T = d_chrom_T;
     route_size = d_route_size;
     clients_CUDA = d_clients;
     routes_CUDA = d_routes;
@@ -580,23 +580,6 @@ __global__ void loadRoutes_CUDA(int nbVehicles, int nbClients, int nbMoves, doub
 
     for (int i = 1; i <= nbClients; i++)
         clients_CUDA[i].whenLastTestedRI = -1;
-}
-
-__global__ void testing_memory()
-{
-    for (int i = 0; i < nbVehicles_CUDA; i++)
-    {
-        printf("Route %d: ", i);
-        Node_CUDA *current = routes_CUDA[i].depot;
-        while (true)
-        {
-            printf("%d -> ", current->cour);
-            current = current->next;
-            if (current->isDepot)
-                break;
-        }
-        printf("DepotEnd\n");
-    }
 }
 
 // each thread will have these

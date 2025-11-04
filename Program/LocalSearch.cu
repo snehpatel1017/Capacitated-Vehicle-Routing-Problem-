@@ -11,7 +11,7 @@ void LocalSearch::loadINDIV_CUDA(Individual &indiv, int nbVehicles, int nbClient
 	}
 
 	cudaMemcpy(d_route_size, routeSizes.data(), sizeof(int) * nbVehicles, cudaMemcpyHostToDevice);
-	cudaMemcpy(chrom_T, indiv.chromT.data(), sizeof(int) * (nbClients + 1), cudaMemcpyHostToDevice);
+	cudaMemcpy(d_chrom_T, indiv.chromT.data(), sizeof(int) * (nbClients + 1), cudaMemcpyHostToDevice);
 	loadRoutes_CUDA<<<1, 1>>>(nbVehicles, nbClients, nbMoves, penaltyCapacityLS, penaltyDurationLS);
 	cudaDeviceSynchronize();
 }
@@ -97,7 +97,7 @@ void LocalSearch::run(Individual &indiv, double penaltyCapacityLS, double penalt
 			default:
 				break;
 			}
-			// std::cout << "Move: " << Best_move << " U: " << nodeU->cour << " V: " << nodeV->cour << std::endl;
+			// 	// std::cout << "Move: " << Best_move << " U: " << nodeU->cour << " V: " << nodeV->cour << std::endl;
 		}
 
 		// for (int posU = 0; posU < params.nbClients; posU++)

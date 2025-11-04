@@ -126,11 +126,11 @@ Params::Params(
 	cudaStreamCreate(&stream2);
 	cudaStreamCreate(&stream3);
 	int n = nbClients + 1;
-	*d_service_duration = nullptr;
-	*d_demand = nullptr;
-	*d_timeCost = nullptr;
-	*d_correlated_customers = nullptr;
-	*d_numberof_correlated = nullptr;
+	d_service_duration = nullptr;
+	d_demand = nullptr;
+	d_timeCost = nullptr;
+	d_correlated_customers = nullptr;
+	d_numberof_correlated = nullptr;
 	size_t bytes_n = n * sizeof(double);
 	size_t bytes_nn = (size_t)n * (size_t)n * sizeof(double);
 	cudaMalloc(&d_service_duration, bytes_n);
@@ -163,7 +163,7 @@ Params::Params(
 	cudaMemcpyAsync(d_demand, demands.data(), bytes_n, cudaMemcpyHostToDevice, stream2);
 	cudaMemcpyAsync(d_timeCost, h_timeCost_flat.data(), bytes_nn, cudaMemcpyHostToDevice, stream3);
 	cudaDeviceSynchronize();
-	initializing_variable_CUDA<<<1, 1>>>(n, d_service_duration, d_demand, d_timeCost, d_correlated_customers, d_numberof_correlated, durationLimit, vehicleCapacity);
+	Initializing_Params_variable_CUDA<<<1, 1>>>(n, d_service_duration, d_demand, d_timeCost, d_correlated_customers, d_numberof_correlated, durationLimit, vehicleCapacity);
 
 	if (verbose)
 		std::cout << "----- INSTANCE SUCCESSFULLY LOADED WITH " << n << " CLIENTS AND " << nbVehicles << " VEHICLES" << std::endl;
